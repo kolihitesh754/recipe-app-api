@@ -3,14 +3,10 @@ name: Checks
 
 on: [push]
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: false
-
 jobs:
   test-lint:
     name: Test and Lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -21,18 +17,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Set up Docker Compose
-        run: docker compose --version
-
-      - name: Build containers
-        run: docker compose build
-
       - name: Test
         run: docker compose run --rm app sh -c "python manage.py test"
-        timeout-minutes: 10
 
       - name: Lint
-        run: docker compose run --rm app sh -c "flake8"
-        timeout-minutes: 5
-
+        run: docker-compose run --rm app sh -c "flake8"
 
