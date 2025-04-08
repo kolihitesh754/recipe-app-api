@@ -6,13 +6,6 @@ on: [push]
 jobs:
   test-lint:
     name: Test and Lint
-
-on:
-  push:
-
-jobs:
-  test-lint:
-    name: Test and Lint
     runs-on: ubuntu-20.04
     steps:
       - name: Login to Docker Hub
